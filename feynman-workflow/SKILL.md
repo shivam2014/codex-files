@@ -1,6 +1,6 @@
 ---
 name: feynman-workflow
-description: "Orchestrates the 'ship fast AND learn deep' development methodology. Use whenever the user starts a coding task, needs to understand code, refactor code, debug a bug, or plan an architecture change. Triggers on phrases like 'let's code this', 'fix this bug', 'implement feature', 'refactor', 'walk me through', 'explain the code'. This skill is the meta-dispatcher: it routes to tdd (test-first implementation), diagnose (systematic debugging), grill-me/grill-with-docs (planning), improve-codebase-architecture (structural improvement), cognitive-apprenticeship (learn from AI's reasoning process), and enforces Feynman-style teaching, compile-after-changes, BEFORE→AFTER diffs, and caveman-tight token discipline throughout."
+description: "Orchestrates the 'ship fast AND learn deep' development methodology. Use whenever the user starts a coding task, needs to understand code, refactor code, debug a bug, or plan an architecture change. Triggers on phrases like 'let's code this', 'fix this bug', 'implement feature', 'refactor', 'walk me through', 'explain the code'. This skill is the meta-dispatcher: it routes to tdd (test-first implementation), diagnose (systematic debugging), grill-me/grill-with-docs (planning), improve-codebase-architecture (structural improvement), cognitive-apprenticeship (learn from AI's reasoning process), html-effectiveness (interactive teaching documentation), and enforces Feynman-style teaching, compile-after-changes, BEFORE→AFTER diffs, web reality-check before presenting, and caveman-tight token discipline throughout."
 ---
 
 
@@ -13,7 +13,7 @@ Ship fast AND learn deep. Equal priority.
 Three phases. **Never skip a phase.**
 
 ### 1. Orient — 2-3 sentences
-What we're solving. Key mechanism. Plan (tdd / diagnose / grill / architecture / cognitive-apprenticeship / direct).
+What we're solving. Key mechanism. Plan (tdd / diagnose / grill / architecture / cognitive-apprenticeship / html-effectiveness / direct).
 
 ### 2. Execute — narrate decisions. For every file edit:
 
@@ -27,8 +27,35 @@ What we're solving. Key mechanism. Plan (tdd / diagnose / grill / architecture /
 
 **One surgical example. Every sentence earns its place.**
 
+**For teaching/documentation output:** generate a self-contained HTML page via `$html-effectiveness` instead of markdown. Pick the closest reference pattern (research explainer, code review, flowchart, slide deck). Validate with `validate-html.mjs`.
+
 ### 3. Verify
-Concrete check (test pass, log output, diff). One-sentence what changed and why. Note open questions.
+- Concrete check (test pass, log output, diff). One-sentence what changed and why.
+- **Knowledge audit:** if your answer relies on factual claims (API behavior, library versions, deprecation dates, pricing, best practices, model names), search the web for one contradicting signal before presenting. Use SearXNG (`localhost:8888`) with one focused query per claim. If you find a contradiction, update your answer. If the search results support your claim, cite the source briefly.
+- Note open questions.
+
+---
+
+## Reality check rules
+
+Before presenting any answer that depends on current or domain-specific knowledge, ask: *"Could my training data be stale on this?"* If yes:
+
+1. Identify which claims are time-sensitive (API versions, release dates, pricing, deprecations, ecosystem trends, model names).
+2. For each such claim, run **one** SearXNG search query at `localhost:8888/search?q=<query>&format=json`.
+3. If results contradict your answer → update it and cite the source.
+4. If results support your answer → optionally cite the strongest source.
+5. If no clear signal → flag uncertainty to the user.
+
+**Do not** search every sentence. One search per time-sensitive claim. Scan the top 3-5 result titles+content, not every result. The goal is catching stale knowledge, not proving exhaustive correctness.
+
+| Triggers audit | Skips audit |
+|---|---|
+| "latest React uses class components" | Code trace, execution path |
+| "OpenAI API pricing is $X" | BEFORE→AFTER diff |
+| "Python 3.12 deprecated X" | Git commands, shell tools |
+| "The best way to do Y is Z" | Architecture decision logic |
+| "Library X version Y has bug Z" | Pure math / algorithms |
+| Any date, version number, or name | Concepts stable for years |
 
 ---
 
@@ -103,6 +130,20 @@ Dispatch based on task type:
 | Repeated bugs in same area | Module is shallow — run `$improve-codebase-architecture` |
 | Hard to build feedback loop | No correct seam = architectural finding |
 
+### Teaching & Documentation
+
+When the primary output is a human-facing artifact (not code):
+
+| Scenario | Action |
+|----------|--------|
+| Explain concept to a human (not tracing code for AI) | Run `$html-effectiveness` → ref 14 (research feature explainer) or ref 15 (research concept explainer) |
+| Code review for learning / onboarding | Run `$html-effectiveness` → ref 3 (code review PR) or ref 17 (PR writeup) |
+| Architecture walkthrough for stakeholders | Run `$html-effectiveness` → ref 4 (code understanding) or ref 13 (flowchart diagram) |
+| Status or incident report | Run `$html-effectiveness` → ref 11 (status report) or ref 12 (incident report) |
+| Planning presentation / deck | Run `$html-effectiveness` → ref 9 (slide deck) or ref 16 (implementation plan) |
+| Custom editor / triage board | Run `$html-effectiveness` → ref 18/19/20 (editor templates) |
+| Quick answer, short snippet, linear docs | Stay in markdown (per `$html-effectiveness` when-to-use table) |
+
 ---
 
 ## Feynman teaching protocol
@@ -120,6 +161,21 @@ When explaining code or answering "why":
 
 ### Good
 > `auth_middleware(request)` reads `request.headers["Authorization"]`, extracts Bearer token via `split()`, calls `verify_token()` which base64-decodes payload, checks `exp < now()`, returns `User` object or raises `401`. `User` attaches to `request.user` before next handler runs.
+
+---
+#### HTML explainer variant
+
+When teaching a human (not tracing code for an AI or engineer): generate a self-contained HTML page from `$html-effectiveness` instead of a markdown wall.
+
+| Markdown trace | HTML alternative via `$html-effectiveness` |
+|---|---|
+| Inline code trace | Clickable step-through with highlighted line numbers (ref 4) |
+| BEFORE→AFTER diff block | Side-by-side panels with syntax-highlighted diffs (ref 3) |
+| Static list of steps | Collapsible sections, tabbed config, interactive demo (ref 14/15) |
+| Mermaid diagram | Live SVG flowchart with hover details (ref 13) |
+| Linear explanation | Slide deck with arrow-key navigation (ref 9) |
+
+Use the markdown trace (above) when the audience is AI or an engineer familiar with the code. Use the HTML variant when the audience is a human who benefits from layout and interactivity. Validate with `node validate-html.mjs`.
 
 ---
 
@@ -162,6 +218,7 @@ Learning is not separate from shipping. Every code change is a teaching moment:
 - **During debug:** "Expected X but got Y because `fetch()` returns a Promise, not data."
 - **During refactor:** "This module was shallow (interface same complexity as impl). Deepening moves branching logic behind one function call."
 - **During `$cognitive-apprenticeship`:** AI narrates observations → hypotheses → tests → conclusions → fix. You learn the *process*, not just the output.
+- **During teaching:** generate an interactive HTML explainer via `$html-effectiveness` instead of a markdown trace. The explainer becomes a shareable artifact the user can revisit and share with others.
 - **After any solution:** Two-pass extraction — get the answer first, then ask "reflect on your approach."
 
 If user asks "why": stop, trace execution path. Answer is always in code path, never in analogy.
@@ -173,3 +230,4 @@ If user asks "why": stop, trace execution path. Answer is always in code path, n
 - `references/teaching-protocol.md` — Full teaching examples and anti-patterns
 - `references/cognitive-apprenticeship.md` — Quick reference for the 6 methods and prompts (full skill lives at `$cognitive-apprenticeship`)
 - `scripts/compile_check.py` — Batch syntax checker for all languages; run via `exec_command` after batch edits
+- `$html-effectiveness` — see its `references/` dir for 20 HTML templates across exploration, code review, design, teaching, reports, and editors
