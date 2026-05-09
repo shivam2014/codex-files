@@ -1,0 +1,90 @@
+model_catalog_json = "/Users/shivam94/.codex/nyro-models.json"
+model_provider = "nyro"
+model = "deepseek-v4-flash-2"
+model_reasoning_effort = "high"
+disable_response_storage = true
+approvals_reviewer = "user"
+personality = "pragmatic"
+
+[model_providers]
+[model_providers.nyro]
+name = "Nyro Gateway"
+base_url = "http://localhost:19530/v1"
+wire_api = "responses"
+requires_openai_auth = true
+[projects."/Users/shivam94"]
+trust_level = "trusted"
+
+[projects."/Users/shivam94/mlx-lm-vanilla/mlx-lm"]
+trust_level = "trusted"
+
+[projects."/Users/shivam94/Documents/Resume"]
+trust_level = "trusted"
+
+[projects."/Users/shivam94/codex-files"]
+trust_level = "trusted"
+
+[mcp_servers.computer-use]
+command = "/Users/shivam94/Library/Application Support/codex-plusplus/tweaks/codex-computer-use/computer-use-mcp.sh"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-05-09T20:11:55Z"
+source_type = "local"
+source = "/Users/shivam94/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.learning-opportunities]
+last_updated = "2026-05-08T19:49:51Z"
+last_revision = "ae8412fb1b9118bfb2fad9872048f9384f797098"
+source_type = "git"
+source = "https://github.com/DrCatHicks/learning-opportunities.git"
+
+[marketplaces.awesome-codex-plugins]
+last_updated = "2026-05-09T19:09:13Z"
+last_revision = "54c624a0f83d4c9dee34bde492330ddd38f72f9b"
+source_type = "git"
+source = "https://github.com/hashgraph-online/awesome-codex-plugins.git"
+sparse_paths = [".agents/plugins"]
+
+[[skills.config]]
+path = "/Users/shivam94/.codex/skills/.system/imagegen/SKILL.md"
+enabled = false
+
+[plugins."searxng@home-plugins"]
+enabled = true
+
+[plugins."camofox-browser@home-plugins"]
+enabled = true
+
+[plugins."learning-opportunities@learning-opportunities"]
+enabled = true
+
+[plugins."learning-opportunities-auto@learning-opportunities"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."openai-developers@openai-curated"]
+enabled = true
+
+[plugins."hugging-face@openai-curated"]
+enabled = true
+
+[plugins."superpowers@openai-curated"]
+enabled = true
+
+[plugins."codex-security@openai-curated"]
+enabled = true
+
+[plugins."hyperframes@openai-curated"]
+enabled = true
+
+[plugins."latex-tectonic@openai-bundled"]
+enabled = true
+
+[plugins."browser-use@openai-bundled"]
+enabled = true
+
+# END CODEX++ MANAGED MCP SERVERS
+[mcp_servers.node_repl]
+command = "/Applications/Codex.app/Contents/Resources/node_repl"
