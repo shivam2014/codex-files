@@ -116,5 +116,41 @@ if (html.includes('dmToggle') && !html.includes('transition: background')) {
   fail('WARN', 'Dark mode toggle present but body missing transition for smooth color switch');
 }
 
+// ── 8. <td> outside <table> (grid vs table-cell mismatch) ──
+// <td> inside a CSS Grid container causes broken layouts — use <div> instead
+let tdCount = 0;
+let tdInTable = 0;
+let tdIdx = 0;
+while (tdIdx < html.length) {
+  const tdStart = html.indexOf('<td', tdIdx);
+  if (tdStart === -1) break;
+  tdCount++;
+  // Check if this <td> is inside a <table> by scanning backwards
+  const beforeTd = html.slice(Math.max(0, tdStart - 500), tdStart);
+  const lastTable = beforeTd.lastIndexOf('<table');
+  const lastTableClose = beforeTd.lastIndexOf('</table>');
+  if (lastTable > lastTableClose) tdInTable++;
+  tdIdx = tdStart + 1;
+}
+const tdOutside = tdCount - tdInTable;
+if (tdOutside > 0) {
+  fail('ERR', `${tdOutside} <td> outside <table> — use <div> for CSS Grid children, not table-cell elements`);
+  // Show first few locations
+  let locIdx = 0;
+  let found = 0;
+  while (found < 3 && locIdx < html.length) {
+    const s = html.indexOf('<td', locIdx);
+    if (s === -1) break;
+    // Check if inside a table
+    const before = html.slice(Math.max(0, s - 500), s);
+    if (before.lastIndexOf('<table') <= before.lastIndexOf('</table>')) {
+      const lineNum = (html.slice(0, s).match(/\n/g) || []).length + 1;
+      const context = html.slice(Math.max(0, s - 40), s + 40).replace(/\n/g, ' ');
+      fail('INFO', `  -> line ${lineNum}: ...${context.trim()}...`);
+      found++;
+    }
+    locIdx = s + 1;
+  }
+}
 console.log(`\n  ${errors + warnings} issues (${errors} errors, ${warnings} warnings)`);
 process.exit(errors > 0 ? 1 : 0);
