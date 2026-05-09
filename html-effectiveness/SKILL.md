@@ -342,6 +342,78 @@ Use these CSS custom properties for consistent look:
 
 ## Guidelines for writing good HTML pages
 
+## Sources & citations
+
+When building explainer pages that reference external sources, use this pattern so readers can verify claims directly.
+
+### Adding a sources section
+
+Add a collapsible `<details>`-based sources section at the bottom of the page, before the page close:
+
+```html
+<h2>Sources &amp; further reading</h2>
+
+<details>
+  <summary>Category title</summary>
+  <div class="body">
+    <ul>
+      <li id="src-1"><strong>Title</strong><br>
+        <a href="https://..." target="_blank">clickable url</a> — description.</li>
+      <li id="src-2"><strong>Title</strong><br>
+        Description with <a href="https://..." target="_blank">link</a>.</li>
+    </ul>
+  </div>
+</details>
+```
+
+Rules:
+- Every `<li>` gets a unique `id="src-N"` (src-1, src-2, ...)
+- Every source has a clickable `<a href>` URL — no plain text URLs
+- Group related sources under `<details>` by category
+
+### Adding citation markers in content
+
+Insert clickable `[N]` markers in the body text that scroll to the corresponding source:
+
+```html
+The IATA BSP collects ticket money <a href="#src-1" class="cite" 
+  onclick="(function(){var el=document.getElementById('src-1');
+  if(el){var d=el.closest('details');if(d&&!d.open)d.open=true;
+  el.scrollIntoView({behavior:'smooth'});}})();return false;">[1]</a>
+  and distributes it to airlines.
+```
+
+The citation `<a>` must:
+- Have `href="#src-N"` pointing to the source ID — provides graceful fallback
+- Have `class="cite"` for styling
+- Use the onclick to: (a) open the parent `<details>` if collapsed, (b) smooth-scroll to the source
+- Include `return false;` to prevent default anchor navigation
+
+### Citation CSS
+
+```css
+.cite { 
+  font-family: var(--mono); font-size: 10px; 
+  color: var(--clay-d); cursor: pointer;
+  padding: 0 2px; text-decoration: none;
+  vertical-align: super; line-height: 0;
+  border-bottom: none;
+  transition: background 0.15s;
+}
+.cite:hover { color: var(--slate); background: rgba(217,119,87,0.1); border-radius: 2px; }
+```
+
+Add dark mode overrides for the hover state.
+
+### Verification
+
+After adding sources:
+1. Run `validate-html.mjs` — check for broken links or missing attributes
+2. Click each `[N]` citation in the browser — verify it scrolls to the correct source and opens the containing `<details>`
+3. Verify every source `<li>` has a clickable URL — no bare text URLs
+4. Verify the interaction works in both light and dark mode
+
+
 - **Structure**: `<header>`, `<section>`, `<footer>` semantic elements
 - **Typography**: serif for headings, sans for body, mono for code
 - **Responsive**: `clamp()` for font sizes, `auto-fill`/`auto-fit` for grids
