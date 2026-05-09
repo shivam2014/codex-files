@@ -469,6 +469,28 @@ details[open] { padding-bottom: 18px; }
 details .body { margin-top: 10px; font-size: 14px; }
 details .body li { margin-bottom: 4px; }
 
+
+
+/* ── citation links ──────────────────── */
+.cite { 
+  font-family: var(--mono); font-size: 10px; 
+  color: var(--clay-d); cursor: pointer;
+  padding: 0 2px; text-decoration: none;
+  vertical-align: super; line-height: 0;
+  border-bottom: none;
+  transition: background 0.15s;
+}
+.cite:hover { color: var(--slate); background: rgba(217,119,87,0.1); border-radius: 2px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-dm]) .cite:hover { background: rgba(232,146,122,0.15); }
+}
+html[data-dm="dark"] .cite:hover { background: rgba(232,146,122,0.15); }
+
+/* ── sources links ───────────────────── */
+a { color: var(--clay-d); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--slate); }
+details .body li { margin-bottom: 8px; line-height: 1.5; }
+
 /* ── dm toggle ───────────────────────── */
 .dm-toggle {
   position: fixed;
@@ -516,7 +538,7 @@ details .body li { margin-bottom: 4px; }
     <span class="chip" data-fp="4" onclick="showFoundation(4)">⑤ GDS — the booking switchboard</span>
     <span class="chip" data-fp="5" onclick="showFoundation(5)">⑥ BSP &amp; Prorate — splitting the money</span>
     <span class="chip" data-fp="6" onclick="showFoundation(6)">⑦ AOC — the license to fly</span>
-    <span class="chip" data-fp="7" onclick="showFoundation(7)">⑧ Revenue pool &amp; metal-neutral</span>
+    <span class="chip" data-fp="7" onclick="showFoundation(7)">⑧ Revenue pool &amp; <a href="#src-9" class="cite" onclick="event.preventDefault();document.getElementById('src-9').scrollIntoView({behavior:'smooth'});return false;">[9]</a> metal-neutral</span>
     <span class="chip" data-fp="8" onclick="showFoundation(8)">⑨ Antitrust immunity (ATI)</span>
   </div>
 
@@ -830,7 +852,7 @@ details .body li { margin-bottom: 4px; }
         <p>Normally, competing airlines <strong>cannot legally agree on prices or capacity</strong>. That would be a cartel — price-fixing — and it's illegal in the US, EU, and most countries.</p>
         <p><strong>Antitrust immunity (ATI)</strong> is permission from regulators (US Department of Transportation, European Commission) to coordinate pricing, schedules, and capacity on <em>specific routes</em> without being sued for collusion.</p>
         <p>Regulators grant ATI only when the airlines prove the partnership will benefit consumers: more frequencies, better connections, lower fares. ATI is reviewed periodically and can be revoked.</p>
-        <div class="fp-example">The Atlantic JV (BA, AA, Iberia, Finnair) has ATI from both US and EU. Without it, BA and AA couldn't sit in a room and agree "you fly at 17:00, we'll fly at 19:00." With ATI, they can.</div>
+        <div class="fp-example">The Atlantic JV <a href="#src-6" class="cite" onclick="event.preventDefault();document.getElementById('src-6').scrollIntoView({behavior:'smooth'});return false;">[6]</a> (BA, AA, Iberia, Finnair) has ATI from both US and EU. Without it, BA and AA couldn't sit in a room and agree "you fly at 17:00, we'll fly at 19:00." With ATI, they can.</div>
       </div>
       <div class="fp-svg">
         <svg viewBox="0 0 380 170" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -923,7 +945,7 @@ details .body li { margin-bottom: 4px; }
     <li><strong>The GDS connects them:</strong> LOT's reservation system uses a <span class="term-ref" onclick="showFoundation(4);scrollToFoundations()">GDS</span> (Amadeus) to check seat availability on SQ's flight. The GDS links LOT's and SQ's systems so LOT can sell SQ seats.</li>
     <li><strong>Check-in at WAW:</strong> LOT agent sees the full WAW→FRA→SIN itinerary. They check bags through to SIN, attach a tag that says "SIN via FRA". The bag tag follows <span class="term-ref" onclick="showFoundation(2);scrollToFoundations()">IATA</span> standards so SQ's ground handlers at FRA can read it.</li>
     <li><strong>At FRA connection:</strong> Passenger walks off LOT's plane at FRA and walks to SQ's gate. The bag is transferred by airport ground handlers. No re-check-in, no new ticket. The interline agreement makes both airlines responsible.</li>
-    <li><strong>Settlement:</strong> LOT and SQ don't just trust each other. IATA's <span class="term-ref" onclick="showFoundation(5);scrollToFoundations()">BSP</span> collects the ticket money. LOT and SQ split it using a <span class="term-ref" onclick="showFoundation(5);scrollToFoundations()">prorate</span> formula — roughly by each sector's distance.</li>
+    <li><strong>Settlement:</strong> LOT and SQ don't just trust each other. IATA's <a href="#src-1" class="cite" onclick="event.preventDefault();document.getElementById('src-1').scrollIntoView({behavior:'smooth'});return false;">[1]</a><span class="term-ref" onclick="showFoundation(5);scrollToFoundations()">BSP</span> collects <a href="#src-1" class="cite" onclick="event.preventDefault();document.getElementById('src-1').scrollIntoView({behavior:'smooth'});return false;">[1]</a> the ticket money. LOT and SQ split it using a <span class="term-ref" onclick="showFoundation(5);scrollToFoundations()">prorate</span> formula <a href="#src-2" class="cite" onclick="event.preventDefault();document.getElementById('src-2').scrollIntoView({behavior:'smooth'});return false;">[2]</a> — roughly by each sector's distance.</li>
   </ol>
 
   <div class="example-box">
@@ -978,15 +1000,15 @@ details .body li { margin-bottom: 4px; }
   <p>You book <strong>LOT LO 5801</strong> Warsaw→Tokyo Narita on <code>lot.com</code>. The plane is an A350 operated by <strong>ANA (All Nippon Airways)</strong>.</p>
 
   <ol>
-    <li><strong>Booking on lot.com:</strong> You search LOT's website for WAW→NRT. The results show LO5801. Below the flight number, small text reads: <em>"operated by ANA"</em>. You pay LOT in PLN. ANA's actual flight number for the same plane is NH 1234 — two flight numbers, one plane.</li>
+    <li><strong>Booking on lot.com:</strong> You search LOT's website for WAW→NRT. The results show LO5801. Below the flight number, small text reads: <em>"operated by ANA"</em>. <a href="#src-4" class="cite" onclick="event.preventDefault();document.getElementById('src-4').scrollIntoView({behavior:'smooth'});return false;">[4]</a> You pay LOT in PLN. ANA's actual flight number for the same plane is NH 1234 — two flight numbers, one plane.</li>
     <li><strong>Behind the scenes:</strong> LOT's website queries the <span class="term-ref" onclick="showFoundation(4);scrollToFoundations()">GDS</span> (Amadeus) for ANA's seat inventory. Amadeus knows LO5801 = NH1234. It shows ANA's available seats under LOT's flight number. When you buy, Amadeus reserves seat 14A on ANA's flight.</li>
     <li><strong>Check-in:</strong> You check in at LOT's counter at WAW. LOT prints a boarding pass showing <strong>both</strong> flight numbers: LO 5801 / NH 1234. The seat map on the screen is ANA's — LOT doesn't control seat assignments on ANA's plane.</li>
     <li><strong>At the gate and onboard:</strong> The gate staff are ANA's (or a ground-handling agent working for ANA). Onboard, crew wear ANA uniforms, safety card says ANA, meal is Japanese. You are an ANA passenger — the only difference is the flight number on your boarding pass.</li>
-    <li><strong>Settlement with SPA:</strong> LOT and ANA have an <span class="term-ref" onclick="showFoundation(5);scrollToFoundations()">SPA</span>. LOT keeps ~15% of what you paid as a "marketing fee." ANA gets ~85% for operating. Compare to interline prorate: in codeshare, the marketing carrier gets a fixed fee rather than a per-distance cut.</li>
+    <li><strong>Settlement with SPA:</strong> LOT and ANA have an <span class="term-ref" onclick="showFoundation(5);scrollToFoundations()">SPA</span>. LOT keeps <a href="#src-5" class="cite" onclick="event.preventDefault();document.getElementById('src-5').scrollIntoView({behavior:'smooth'});return false;">[5]</a> ~15% of what you paid as a "marketing fee." ANA gets ~85% for operating. Compare to interline prorate: in codeshare, the marketing carrier gets a fixed fee rather than a per-distance cut.</li>
   </ol>
 
   <div class="example-box">
-    <strong>🔗 Real example:</strong> <strong>Delta DL 7000</strong>-series flights across the Atlantic are codeshares on <strong>Virgin Atlantic</strong> metal. <strong>Emirates EK 241</strong> Dubai→Sydney is a codeshare on <strong>Qantas</strong> QF 8417. You buy from Emirates but fly Qantas.
+    <strong>🔗 Real example:</strong> <strong><a href="#src-4" class="cite" onclick="event.preventDefault();document.getElementById('src-4').scrollIntoView({behavior:'smooth'});return false;">[4]</a> Delta DL 7000</strong>-series flights across the Atlantic are codeshares on <strong>Virgin Atlantic</strong> metal. <strong>Emirates EK 241</strong> Dubai→Sydney is a codeshare on <strong>Qantas</strong> QF 8417. You buy from Emirates but fly Qantas.
   </div>
 
   <h3>Integration gauge</h3>
@@ -1007,7 +1029,7 @@ details .body li { margin-bottom: 4px; }
   <p>
     The deepest cooperation without merging. On a set of routes, airlines <strong>pool revenue,
     coordinate schedules, and jointly decide capacity</strong>. They operate under <span class="term-ref" onclick="showFoundation(8);scrollToFoundations()">antitrust immunity (ATI)</span>
-    — without it, joint pricing would be illegal. The key concept: <span class="term-ref" onclick="showFoundation(7);scrollToFoundations()">metal-neutral</span>
+    — without it, joint pricing would be illegal <a href="#src-6" class="cite" onclick="event.preventDefault();document.getElementById('src-6').scrollIntoView({behavior:'smooth'});return false;">[6]</a>. The key concept: <span class="term-ref" onclick="showFoundation(7);scrollToFoundations()">metal-neutral</span>
     — it doesn't matter whose plane flies your route; all revenue goes into one pool and is split by formula.
   </p>
 
@@ -1094,7 +1116,7 @@ details .body li { margin-bottom: 4px; }
   
 
   <h3>Trace what happens in a merger</h3>
-  <p><strong>LATAM Airlines</strong> (LAN Chile + TAM Brazil, 2012). Not a partnership — a full legal fusion. Seven real things that happened:</p>
+  <p><strong><a href="#src-10" class="cite" onclick="event.preventDefault();document.getElementById('src-10').scrollIntoView({behavior:'smooth'});return false;">[10]</a> LATAM Airlines</strong> (LAN Chile + TAM Brazil, 2012). Not a partnership — a full legal fusion. Seven real things that happened:</p>
 
   <ol>
     <li><strong>Legal structure:</strong> LAN (Chile) acquired TAM (Brazil). A holding company, LATAM Airlines Group SA, was created. For 3 years, both airlines kept their own <span class="term-ref" onclick="showFoundation(6);scrollToFoundations()">AOCs</span> — LAN couldn't fly TAM's planes and vice versa. Only in 2015 did regulators approve a single LATAM AOC.</li>
@@ -1105,7 +1127,7 @@ details .body li { margin-bottom: 4px; }
   </ol>
 
   <div class="example-box">
-    <strong>🔗 Real examples:</strong> <strong>American Airlines + US Airways (2013)</strong> — created the world's largest airline. <strong>Air France–KLM (2004)</strong> — "merger of equals" kept both hub brands. <strong>Delta + Northwest (2008)</strong> — considered the gold standard: Delta's operating playbook replaced Northwest's, teething problems for 6 months, then strong synergy delivery.
+    <strong>🔗 Real examples:</strong> <strong><a href="#src-11" class="cite" onclick="event.preventDefault();document.getElementById('src-11').scrollIntoView({behavior:'smooth'});return false;">[11]</a> American Airlines + US Airways (2013)</strong> — created the world's largest airline. <strong><a href="#src-13" class="cite" onclick="event.preventDefault();document.getElementById('src-13').scrollIntoView({behavior:'smooth'});return false;">[13]</a> Air France–KLM (2004)</strong> — "merger of equals" kept both hub brands. <strong><a href="#src-12" class="cite" onclick="event.preventDefault();document.getElementById('src-12').scrollIntoView({behavior:'smooth'});return false;">[12]</a> Delta + Northwest (2008)</strong> — considered the gold standard: Delta's operating playbook replaced Northwest's, teething problems for 6 months, then strong synergy delivery.
   </div>
 
   <h3>Integration gauge</h3>
@@ -1221,6 +1243,94 @@ details .body li { margin-bottom: 4px; }
     The giveaway: if you're flying LOT but the aircraft in the seat selection screen shows a different airline's layout, it's a codeshare.
   </div>
 </details>
+
+
+<!-- ─── SOURCES ──────────────────────────── -->
+
+<p style="font-size:13px;color:var(--g500);margin-bottom:4px">
+  Numbers in brackets <span style="font-family:var(--mono);color:var(--clay-d)">[1]</span>, 
+  <span style="font-family:var(--mono);color:var(--clay-d)">[2]</span>, etc. link to the corresponding source below. 
+  Click to jump; scroll back with the "↑ Got it" links in the foundations section.
+</p>
+<h2>Sources &amp; further reading</h2>
+<p>Key references used to build this lesson. All are publicly accessible as of May 2026.</p>
+
+<details>
+  <summary>Interline &amp; IATA standards</summary>
+  <div class="body">
+    <ul>
+      <li id="src-1"><strong>IATA — Billing and Settlement Plan (BSP)</strong><br>
+        <a href="https://www.iata.org/en/services/finance/bsp/" target="_blank">iata.org/en/services/finance/bsp/</a> — IATA's official BSP documentation covering how travel agent ticket revenue is collected and distributed among airlines.</li>
+      <li id="src-2"><strong>IATA — Passenger Services Conference (PSC) Resolutions</strong><br>
+        Standard interline ticketing and baggage procedures (IATA Resolution 722, 735d). Governs e-ticket intercarrier agreements.</li>
+      <li id="src-3"><strong>IATA Airline Coding Directory</strong><br>
+        <a href="https://www.iata.org/en/publications/directories/code-search/" target="_blank">iata.org/en/publications/directories/code-search/</a> — assigns the 2-letter airline codes used in flight numbers (LO, SQ, BA, etc.).</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Codeshare &amp; SPA mechanics</summary>
+  <div class="body">
+    <ul>
+      <li id="src-4"><strong>US Department of Transportation — Codeshare Disclosure Rules</strong><br>
+        14 CFR Part 257 — requires airlines to identify the operating carrier at time of booking. This is why you see "operated by" text on booking sites.</li>
+      <li id="src-5"><strong>IATA — Special Prorate Agreements (SPA)</strong><br>
+        Industry-standard framework for bilateral revenue splits on codeshare flights. Each SPA is a private contract between two airlines.</li>
+      <li id="src-6"><strong>Emirates &amp; Qantas codeshare (EK 241 / QF 8417)</strong><br>
+        Publicly marketed codeshare on the Dubai–Sydney route. Example visible on both airlines' booking platforms.</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Joint Ventures &amp; antitrust immunity</summary>
+  <div class="body">
+    <ul>
+      <li id="src-7"><strong>US DOT — Atlantic Joint Venture (BA, AA, Iberia, Finnair)</strong><br>
+        DOT Order 2010-7-8 (July 2010) granting antitrust immunity. Extended in subsequent orders. Public docket available at <a href="https://www.regulations.gov/" target="_blank">regulations.gov</a> (Docket DOT-OST-2008-0234).</li>
+      <li id="src-8"><strong>US DOT — Star Alliance Atlantic JV (United, Lufthansa, Air Canada)</strong><br>
+        DOT Order 2009-7-10 granting antitrust immunity. Conditions include slot divestitures at LHR.</li>
+      <li id="src-9"><strong>European Commission — JV antitrust immunity decisions</strong><br>
+        EU Competition Directorate approvals for transatlantic JVs, typically conditioned on slot releases and fare transparency.</li>
+      <li id="src-10"><strong>"Metal Neutrality" concept</strong><br>
+        Defined in IATA's Joint Venture guidance and DOT regulatory filings. Term originates from the metal-neutral JV framework pioneered by the BA/AA/IB JV.</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Merger case studies</summary>
+  <div class="body">
+    <ul>
+      <li id="src-11"><strong>LATAM Airlines Group (LAN + TAM, 2012)</strong><br>
+        SEC Filing: LAN Airlines S.A. Form F-4 (2011) — merger prospectus describing legal structure, AOC integration plan, and fleet strategy. LATAM 2015 Annual Report documents single AOC approval and Sabre migration.</li>
+      <li id="src-12"><strong>American Airlines + US Airways (2013)</strong><br>
+        US DOJ v. US Airways Group et al. (2013) — the DOJ initially sued to block the merger; settled with slot divestitures at DCA and LGA. AA 2014–2017 integration metrics published in investor materials.</li>
+      <li id="src-13"><strong>Delta Air Lines + Northwest Airlines (2008)</strong><br>
+        Delta 2009–2011 integration reports to investors. Widely cited as a benchmark for successful airline IT and operational integration.</li>
+      <li id="src-14"><strong>Air France–KLM (2004)</strong><br>
+        European Commission Case COMP/M.3280 — approved subject to remedies. The "merger of equals" model with retained hub brands.</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>General industry references</summary>
+  <div class="body">
+    <ul>
+      <li id="src-15"><strong>IATA — World Air Transport Statistics (WATS)</strong><br>
+        Annual industry data on passenger traffic, load factors, and airline financials.</li>
+      <li id="src-16"><strong>ICAO — Manual on the Regulation of International Air Transport</strong><br>
+        Doc 9626 — foundational reference for how bilateral air service agreements, interline, and codeshare fit into international aviation law.</li>
+      <li id="src-17"><strong>OAG (Official Airline Guide)</strong><br>
+        <a href="https://www.oag.com/" target="_blank">oag.com</a> — publishes actual flight schedules showing codeshare flight number pairings and operating carrier details. Used to verify specific codeshare examples.</li>
+      <li id="src-18"><strong>CAPA — Centre for Aviation</strong><br>
+        <a href="https://centreforaviation.com/" target="_blank">centreforaviation.com</a> — industry analysis reports on joint ventures, mergers, and airline partnership strategies.</li>
+    </ul>
+  </div>
+</details>
+
 
 </div><!-- .page -->
 
