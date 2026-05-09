@@ -1,0 +1,2 @@
+# Add this to the TOP of ~/.codex/config.toml
+model_catalog_json = "/Users/shivam94/.cache/nyro-codex-models.json"

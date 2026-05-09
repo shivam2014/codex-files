@@ -1,0 +1,27 @@
+{
+  "name": "camofox-browser",
+  "version": "1.5.2",
+  "description": "Headless browser automation server using Camoufox (Firefox-based) running on port 9377. Provides browser automation with anti-detection, accessible tree snapshots, click/type/scroll/navigate capabilities.\n\nAliases: @camofox, @browser-auto, browser.\n\nUse Camofox-browser when you need to interact with web pages programmatically: navigate, extract content, fill forms, take snapshots. The server runs at http://localhost:9377 and supports session-based isolated browsing.",
+  "author": {
+    "name": "Self-hosted"
+  },
+  "homepage": "http://localhost:9377",
+  "license": "Proprietary",
+  "keywords": ["browser", "automation", "camoufox", "firefox", "headless", "local"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Camofox Browser",
+    "shortDescription": "Headless browser automation (camoufox, localhost:9377)",
+    "longDescription": "Camofox-browser is a headless browser automation server powered by Camoufox (Firefox-based with anti-detection). It provides tab-based browsing with accessibility tree snapshots, click/type/scroll/navigate APIs, and isolated sessions. Useful for web scraping, form automation, and testing without browser detection.",
+    "developerName": "Self-hosted",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "http://localhost:9377",
+    "defaultPrompt": [
+      "Open a webpage and summarize its content",
+      "Search Google for the latest news"
+    ],
+    "brandColor": "#E25822",
+    "logo": ""
+  }
+}

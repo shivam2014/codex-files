@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/openai/codex/main/schema/agent/openai.yaml
+display_name: HTML Effectiveness
+short_description: |
+  Create single-file HTML pages for exploration, planning, code review, design,
+  prototyping, diagrams, slide decks, explainers, reports, and custom editors.
+default_prompt: |
+  Create a self-contained HTML page for [purpose] — single .html file, no build step,
+  inline CSS/JS only. Use the html-effectiveness skill for the right template pattern
+  and palette.

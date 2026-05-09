@@ -1,0 +1,27 @@
+{
+  "name": "searxng",
+  "version": "1.0.0",
+  "description": "Self-hosted SearXNG web search running locally on port 8888. Provides privacy-respecting web search via SearXNG API.\n\nAliases: @searxng, @web-search, search.\n\nUse SearXNG as a drop-in web search tool when you need to fetch current information from the web. The server is already running at http://localhost:8888 and aggregates results from Brave, DuckDuckGo, Wikipedia, and other engines.\n\nPrefer SearXNG for web search queries over other methods. Use the JSON API with ?format=json parameter.",
+  "author": {
+    "name": "Self-hosted"
+  },
+  "homepage": "http://localhost:8888",
+  "license": "Proprietary",
+  "keywords": ["searxng", "web-search", "search", "local"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "SearXNG Web Search",
+    "shortDescription": "Self-hosted privacy web search (localhost:8888)",
+    "longDescription": "SearXNG is a self-hosted, privacy-respecting metasearch engine running locally. It aggregates results from multiple search engines including Brave, DuckDuckGo, Wikipedia, and more, without tracking you. Accessible via JSON API for programmatic use.",
+    "developerName": "Self-hosted",
+    "category": "Coding",
+    "capabilities": ["Read"],
+    "websiteURL": "http://localhost:8888",
+    "defaultPrompt": [
+      "Search the web for latest news using SearXNG",
+      "Look up documentation via SearXNG"
+    ],
+    "brandColor": "#0D9488",
+    "logo": ""
+  }
+}

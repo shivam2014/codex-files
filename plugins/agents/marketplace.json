@@ -1,0 +1,32 @@
+{
+  "name": "home-plugins",
+  "interface": {
+    "displayName": "My Local Plugins"
+  },
+  "plugins": [
+    {
+      "name": "searxng",
+      "source": {
+        "source": "local",
+        "path": "./plugins/searxng"
+      },
+      "policy": {
+        "installation": "INSTALLED_BY_DEFAULT",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "camofox-browser",
+      "source": {
+        "source": "local",
+        "path": "./plugins/camofox-browser"
+      },
+      "policy": {
+        "installation": "INSTALLED_BY_DEFAULT",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding"
+    }
+  ]
+}
