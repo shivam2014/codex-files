@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feynman Workflow"
+  short_description: "Ship fast, learn deep: Feynman coding + TDD + compile check"
+  default_prompt: "I want to code with the Feynman workflow — ship fast AND learn deep"
