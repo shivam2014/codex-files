@@ -250,6 +250,53 @@ function updateToggleIcon() {
 .dm-toggle:hover { transform: scale(1.08); }
 ```
 
+### Code blocks: keep background dark in all modes
+
+Code blocks should **not** use `var(--slate)` for their background — in dark mode `--slate` flips to a light color, making text invisible. Use a hardcoded dark background instead:
+
+```css
+.code-block {
+  background: #1A1A1A;          /* hardcoded dark — never changes */
+  color: #E8E6DC;               /* light text on dark background */
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  border-radius: 8px;
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+.code-block .dim { color: #8A8A8A; }   /* hardcoded gray */
+.code-block .err { color: #E8837C; }   /* red for errors/deletions */
+.code-block .fix { color: #7EC87E; }   /* green for additions/fixes */
+.code-block .del { color: #E8837C; }   /* red for deletions */
+```
+
+Also add overrides for inline `<code>` in paragraphs/lists so they stay readable in dark mode:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root:not([data-dm]) p code,
+  :root:not([data-dm]) li code {
+    background: #2A2A2A;
+    color: #E8E6DC;
+  }
+}
+html[data-dm="dark"] p code,
+html[data-dm="dark"] li code {
+  background: #2A2A2A;
+  color: #E8E6DC;
+}
+html[data-dm="light"] p code,
+html[data-dm="light"] li code {
+  background: #F0EEE6;
+  color: #3D3D3A;
+}
+```
+
+This applies to the validation script's checks: rendered-but-unreadable code blocks in dark mode are a user-facing bug.
+
+---
+
 ### Add `transition` to body for smooth switching
 
 ```css
