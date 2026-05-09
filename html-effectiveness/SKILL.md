@@ -347,6 +347,7 @@ Use these CSS custom properties for consistent look:
 - **Responsive**: `clamp()` for font sizes, `auto-fill`/`auto-fit` for grids
 - **Interactivity**: Keep JS under 50 lines; use `click`, `input`, `drag` events
 - **Export**: For editors, always include a copy/export button that serializes state
+- **Universal reset gotcha**: `* { margin: 0; padding: 0; }` strips default list indentation. Always add `ul { padding-left: 20px; }` when using bullet points.
 - **SVG**: Inline SVG for diagrams — color with currentColor or CSS variables
 - **No frameworks**: No React, no libraries, no CDN scripts — vanilla HTML/CSS/JS
 - **File size**: Target under 30 KB; if it's bigger, inline only what's needed
