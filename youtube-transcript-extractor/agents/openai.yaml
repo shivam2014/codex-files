@@ -1,0 +1,5 @@
+# Skill metadata for YouTube Transcript Extractor
+# Auto-generated; matches the SKILL.md frontmatter.
+display_name: "YouTube Transcript Extractor"
+short_description: "Fetch YouTube video transcripts and save as text files"
+default_prompt: "Fetch the transcript for YouTube video {VIDEO_ID} and save it to data/"
