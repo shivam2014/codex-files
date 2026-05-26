@@ -1,6 +1,6 @@
 ---
 name: feynman-workflow
-description: "Orchestrates the 'ship fast AND learn deep' development methodology. Use whenever the user starts a coding task, needs to understand code, refactor code, debug a bug, or plan an architecture change. Triggers on phrases like 'let's code this', 'fix this bug', 'implement feature', 'refactor', 'walk me through', 'explain the code'. This skill is the meta-dispatcher: it routes to tdd (test-first implementation), diagnose (systematic debugging), grill-me/grill-with-docs (planning), improve-codebase-architecture (structural improvement), cognitive-apprenticeship (learn from AI's reasoning process), html-effectiveness (interactive teaching documentation), and enforces Feynman-style teaching, compile-after-changes, BEFORE→AFTER diffs, web reality-check before presenting, and caveman-tight token discipline throughout."
+description: "Orchestrates the 'ship fast AND learn deep' development methodology. Use whenever the user starts a coding task, needs to understand code, refactor code, debug a bug, or plan an architecture change. Triggers on phrases like 'let's code this', 'fix this bug', 'implement feature', 'refactor', 'walk me through', 'explain the code'. This skill is the meta-dispatcher: it routes to tdd (test-first implementation), diagnose (systematic debugging), grill-me/grill-with-docs (planning), skill-installer/skill-creator (skill management), improve-codebase-architecture (structural improvement), cognitive-apprenticeship (learn from AI's reasoning process), html-effectiveness (interactive teaching documentation), and enforces Feynman-style teaching, compile-after-changes, BEFORE→AFTER diffs, web reality-check before presenting, and caveman-tight token discipline throughout."
 ---
 
 
@@ -15,7 +15,19 @@ Three phases. **Never skip a phase.**
 ### 1. Orient — 2-3 sentences
 What we're solving. Key mechanism. Plan (tdd / diagnose / grill / architecture / cognitive-apprenticeship / html-effectiveness / direct).
 
-### 2. Execute — narrate decisions. For every file edit:
+**Before any exploration:** state your thesis — what do you expect to find, and why. This gets written so the user sees your reasoning before the results confirm or refute it.
+
+### 2. Execute — narrate decisions.
+
+**Before/During/After Action Protocol** — for every investigation action (reading a file, searching code, running a command):
+
+- **Before:** What you're about to do and why. Your thesis — what do you expect to find?
+- **During:** Observations as they happen. What the code/command actually says. Name files and line numbers.
+- **After:** Did your thesis hold? If wrong, what changed your understanding? If confirmed, what's the next question this raises?
+
+This applies to ALL exploration, not just file edits. It's how the user follows your reasoning in real time.
+
+**For every file edit:**
 
 **Show BEFORE→AFTER diff.** Not "I updated X" — show the actual diff block.
 
@@ -31,7 +43,14 @@ What we're solving. Key mechanism. Plan (tdd / diagnose / grill / architecture /
 
 ### 3. Verify
 - Concrete check (test pass, log output, diff). One-sentence what changed and why.
-- **Knowledge audit:** if your answer relies on factual claims (API behavior, library versions, deprecation dates, pricing, best practices, model names), search the web for one contradicting signal before presenting. Use SearXNG (`localhost:8888`) with one focused query per claim. If you find a contradiction, update your answer. If the search results support your claim, cite the source briefly.
+- **Self-review your own output before presenting to the user.** Scan for:
+  - Issues you already know are there (missing edge case, wrong section, stale reference)
+  - Ambiguity the user would have to resolve before they can use the result
+  - Style or format deviations from established preferences
+  List 2-4 specific issues as fix/no-fix choices. Don't ask "is this good?" — tell them what's wrong and let them pick what to address.
+  **For each issue, state your recommendation.** Not just "this is wrong, fix?" but "this should change to X because Y." When the user says "I don't know" to an item, provide your reasoning and a concrete suggestion — don't leave them guessing.
+- **Knowledge audit:** if your answer relies on factual claims (API behavior, library versions, deprecation dates, pricing, best practices, model names), search the web for one contradicting signal before presenting. Use SearXNG (`localhost:8888`) with one focused query per claim via `$searxng-search`. If you find a contradiction, update your answer. If the search results support your claim, cite the source briefly.
+- **Backup & commit:** if work created/modified files in `~/.codex/skills/` or the project repo, copy to `~/codex-files/` (if applicable) and commit with a descriptive message. Emit `::git-stage`, `::git-commit`, and related git directives.
 - Note open questions.
 
 ---
@@ -41,7 +60,7 @@ What we're solving. Key mechanism. Plan (tdd / diagnose / grill / architecture /
 Before presenting any answer that depends on current or domain-specific knowledge, ask: *"Could my training data be stale on this?"* If yes:
 
 1. Identify which claims are time-sensitive (API versions, release dates, pricing, deprecations, ecosystem trends, model names).
-2. For each such claim, run **one** SearXNG search query at `localhost:8888/search?q=<query>&format=json`.
+2. For each such claim, run **one** SearXNG search query via `$searxng-search`.
 3. If results contradict your answer → update it and cite the source.
 4. If results support your answer → optionally cite the strongest source.
 5. If no clear signal → flag uncertainty to the user.
@@ -63,8 +82,8 @@ Before presenting any answer that depends on current or domain-specific knowledg
 
 After every file edit: **YOU MUST run the syntax checker command via `exec_command`.** Do NOT visually inspect the code as a substitute for running the actual command. The check must be a real subprocess execution.
 
-| Language | `exec_command` with this command |
-|----------|----------------------------------|
+| Language | `exec_command` command |
+|----------|------------------------|
 | Python | `python3 -c "import py_compile; py_compile.compile('file.py', doraise=True)"` |
 | TypeScript | `npx tsc --noEmit --strict file.ts` (or tsconfig) |
 | JavaScript | `node -c file.js` |
@@ -95,6 +114,14 @@ Dispatch based on task type:
 | Non-code decision, ambiguous design | Run `$grill-me` first |
 | Code design on existing codebase | Run `$grill-with-docs` first |
 | After grilling | Update CONTEXT.md inline with resolved terms |
+
+### Skill management
+
+| Scenario | Action |
+|----------|--------|
+| Install a pre-built skill from GitHub/curated list | Run `$skill-installer` — list, install-skill-from-github |
+| Create or update a new skill from scratch | Run `$skill-creator` — init → write scripts → validate |
+| Back up a newly-created skill | Copy to `~/codex-files/skills/` and commit |
 
 ### Implementation
 
@@ -229,5 +256,6 @@ If user asks "why": stop, trace execution path. Answer is always in code path, n
 
 - `references/teaching-protocol.md` — Full teaching examples and anti-patterns
 - `references/cognitive-apprenticeship.md` — Quick reference for the 6 methods and prompts (full skill lives at `$cognitive-apprenticeship`)
+- `references/user-preferences.md` — Per-user workflow and communication preferences for this specific user (Shivam). Load before executing to tailor grill-me questions, response structure, and workflow order to the user's actual work patterns. Derived from session corrections.
 - `scripts/compile_check.py` — Batch syntax checker for all languages; run via `exec_command` after batch edits
 - `$html-effectiveness` — see its `references/` dir for 20 HTML templates across exploration, code review, design, teaching, reports, and editors
