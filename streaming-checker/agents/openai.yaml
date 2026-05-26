@@ -1,0 +1,4 @@
+interface:
+  display_name: "Streaming Checker"
+  short_description: "Check streaming availability across regions via JustWatch"
+  default_prompt: "Check which countries and streaming services have [show/movie]"
