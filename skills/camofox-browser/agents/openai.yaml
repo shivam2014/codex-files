@@ -1,0 +1,3 @@
+display_name: Camofox Browser
+short_description: Anti-detection browser via REST API (port 9377) for undetected web search.
+default_prompt: Use Camofox browser at http://localhost:9377 to research a topic on the web
