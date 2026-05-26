@@ -1,0 +1,3 @@
+display_name: SearXNG Search
+short_description: "Web search via self-hosted SearxNG. Aggregates Google, Bing, DuckDuckGo, Brave. Zero API key."
+icon: "🌐"
