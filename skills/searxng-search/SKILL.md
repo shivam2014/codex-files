@@ -7,7 +7,7 @@ description: "Web search via self-hosted SearxNG meta-search engine through Camo
 
 Web search powered by [SearxNG](https://github.com/searxng/searxng) — self-hosted meta search engine on `localhost:8888`. Zero API key, full privacy.
 
-**Problem:** Direct SearXNG JSON API (`curl`/`httpx`) gets rate-limited/CAPTCHA-blocked by upstream engines (Brave, DuckDuckGo, Startpage) because Python HTTP clients lack browser fingerprinting.
+**Problem:** Direct SearXNG JSON API (`curl`/`httpx`) gets rate-limited/CAPTCHA-blocked by upstream engines because Python HTTP clients lack browser fingerprinting.
 
 **Solution:** Route SearXNG through [Camoufox](https://github.com/redf0x1/camofox-browser) — a Firefox fork with C++-level fingerprint spoofing. Open SearXNG search URLs in Camoufox, then extract results from the accessibility snapshot. Google and Wikipedia consistently return results through this method.
 
@@ -32,22 +32,21 @@ If results are returned, use them directly (fast). If engines are all unresponsi
 Open SearXNG search URL in Camoufox, then extract result URLs from snapshot:
 
 ```bash
-# Step A: Open search URL in Camoufox
-~/.codex/skills/camofox-browser/scripts/camofox.sh close-all 2>/dev/null
+# Step A: Close stale tabs for clean session
+~/.codex/skills/camofox-browser/scripts/camofox.sh close-all
+
+# Step B: Open search URL in Camoufox
 ~/.codex/skills/camofox-browser/scripts/camofox.sh open \
   "http://localhost:8888/search?q=URLENCODED_QUERY&language=en&safesearch=0&categories=general"
 
-# Step B: Snapshot to get result links
-~/.codex/skills/camofox-browser/scripts/camofox.sh snapshot
-
-# Step C: Extract result URLs (grep for article links)
+# Step C: Snapshot to get result links
 ~/.codex/skills/camofox-browser/scripts/camofox.sh snapshot 2>&1 | \
   grep -E "link.*http" | grep -v "searx\.space\|localhost\|/preferences\|/stats\|github.com/searxng\|Source code\|Issue tracker\|Engine stats\|Public instances"
 ```
 
 ### 3. Deep-dive
 
-If snippet truncated, open individual result URLs in Camoufox for full content:
+Open individual result URLs in Camoufox for full content:
 
 ```bash
 ~/.codex/skills/camofox-browser/scripts/camofox.sh open "https://example.com/article"
@@ -56,11 +55,40 @@ If snippet truncated, open individual result URLs in Camoufox for full content:
 
 ## Helper Script
 
-Use `scripts/searxng-camofox.py` for a single-command search through the Camoufox path:
-
 ```bash
 python3 scripts/searxng-camofox.py "your query"
 python3 scripts/searxng-camofox.py "your query" --num 5
+```
+
+## Camoufox Best Practices (from redf0x1/camofox-browser + CapSolver integration guide)
+
+These practices keep the Camoufox browser session stable and avoid detection/rate-limiting:
+
+### 1. Session Cleanliness — Close Tabs Between Queries
+Always close stale tabs before opening a new search. Leftover tabs accumulate cookies and DOM state that can trigger inconsistent behavior.
+```bash
+camofox close-all
+```
+
+### 2. Rate Limiting — Delay Between Consecutive Searches
+When running multiple searches in sequence, add 2–5s delays between them to avoid triggering upstream rate limits:
+```bash
+sleep 3 && camofox open "..."
+```
+
+### 3. Fingerprint Consistency — Keep Session Per Query
+Each `camofox open` creates a fresh page in the same browser context. The Camoufox server maintains consistent fingerprint within a session. When engines start blocking, close-all and retry — the new session gets a fresh fingerprint.
+
+### 4. Error Handling — Retry on Empty Results
+If snapshot returns no result links:
+1. Wait 3s and re-snapshot (page may still be rendering)
+2. Close-all and retry the search (fresh session, fresh fingerprint)
+3. Fall back to `scripts/core.py` with different engines (e.g., `--engines google,wikipedia`)
+
+### 5. Result Extraction
+Extract result URLs from snapshot output:
+```bash
+snapshot 2>&1 | grep -E "link.*http" | grep -v "searx\.space\|localhost\|/preferences\|/stats\|github.com/searxng\|Source code\|Issue tracker\|Engine stats\|Public instances"
 ```
 
 ## Parameters (direct JSON API)
