@@ -1,0 +1,3 @@
+display_name: Filetree
+short_description: Auto-maintain FILETREE.md — a machine-readable project map with one-line summaries per file.
+default_prompt: "Initialize the filetree manifest for this project"
